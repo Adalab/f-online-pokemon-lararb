@@ -7,7 +7,7 @@ class PokeCard extends React.Component {
         return (
             <div className="pokeCard__container">
               <img src={item.pokemon.sprites.front_default} alt={item.pokemon.name} className="pokeImg"/>
-              <p className="pokeId">{`ID / ${item.pokemon.order}`}</p>
+              <p className="pokeId">{`ID / ${item.pokemon.id}`}</p>
               <div className="pokeInfo__container">
                 <h2 className="pokeName">{item.pokemon.name}</h2>
                 <div className="pokeType__container">

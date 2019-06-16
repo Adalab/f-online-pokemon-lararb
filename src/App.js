@@ -15,6 +15,7 @@ class App extends React.Component {
     }
 
    this.handleChangeInput = this.handleChangeInput.bind(this);
+   this.compareId = this.compareId.bind(this);
 
   }
 
@@ -46,6 +47,12 @@ class App extends React.Component {
     })
   }
 
+  compareId(pokeA, pokeB) {
+    if (pokeA.id > pokeB.id) return 1;
+    if (pokeA.id < pokeB.id) return -1;
+    return 0;
+  }
+
   render() {
     const {pokeData, value} = this.state;
     console.log(pokeData);
@@ -57,7 +64,7 @@ class App extends React.Component {
         :
           <React.Fragment>
             <PokeInput handleChangeInput={this.handleChangeInput}/>
-            <PokeList pokeData={pokeData} value={value}/>
+            <PokeList pokeData={pokeData} value={value} compareId={this.compareId(pokeData.pokemon.id, pokeData.pokemon.id)}/>
           </React.Fragment>
         }
       </div>

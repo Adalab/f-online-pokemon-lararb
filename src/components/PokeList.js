@@ -5,7 +5,7 @@ import './PokeList.css';
 
 class PokeList extends React.Component {
     render() {
-        const {pokeData, value} = this.props;
+        const {pokeData, value, compareId} = this.props;
         return (
             <ul className="pokeList">
                 {pokeData
@@ -13,8 +13,9 @@ class PokeList extends React.Component {
                     .map((item, index) =>
                         <li className="pokeItem" key={index}>
                             <PokeCard item={item}/>
-                        </li>
-                )}
+                        </li>)
+                    .sort(compareId)    
+                }
             </ul>
         );
     }
