@@ -8,7 +8,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pokeData: [],
+      pokeData: JSON.parse(localStorage.getItem('dataSaved')) || [],
       value: ''
     }
 
@@ -27,10 +27,12 @@ class App extends React.Component {
         fetch(item.url)
           .then (res => res.json())
           .then(data =>
-            this.setState(prevState => {
+            {this.setState(prevState => {
               const newData = [...prevState.pokeData, {pokemon: data}]
+              localStorage.setItem('dataSaved', JSON.stringify(newData))
               return {pokeData: newData}
             })
+            }
           )
       ))
   }
