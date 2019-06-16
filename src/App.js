@@ -48,16 +48,17 @@ class App extends React.Component {
 
   render() {
     const {pokeData, value} = this.state;
+    console.log(pokeData);
 
     return (
       <div className="App">
-        {pokeData === [] ? 
-        <React.Fragment>
-          <PokeInput handleChangeInput={this.handleChangeInput}/>
-          <PokeList pokeData={pokeData} value={value}/>
-        </React.Fragment>
+        {pokeData.length === 0 ? 
+          <p className="loadingMessage">Pokemons are coming... despacico :)</p>
         :
-         <p className="loadingMessage">Pokemons are coming... despacico :)</p> 
+          <React.Fragment>
+            <PokeInput handleChangeInput={this.handleChangeInput}/>
+            <PokeList pokeData={pokeData} value={value}/>
+          </React.Fragment>
         }
       </div>
     );
