@@ -1,5 +1,7 @@
 import React from 'react';
 import './App.css';
+import PokeList from './components/PokeList';
+import PokeInput from './components/PokeInput';
 
 
 class App extends React.Component {
@@ -8,7 +10,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pokeData: JSON.parse(localStorage.getItem('dataSaved')) || [],
+      pokeData: JSON.parse(localStorage.getItem('dataSaved')),
       value: ''
     }
 
@@ -50,23 +52,8 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <input type="text" onChange={this.handleChangeInput}/>
-        <ul className="pokeList">
-          {pokeData
-          .filter(item => item.pokemon.name.includes(value))
-          .map((item, index) =>
-          <li className="pokeItem" key={index}>
-            <div className="pokeCard__container">
-              <img src={item.pokemon.sprites.front_default} alt={item.pokemon.name} className="pokeImg"/>
-              <p className="pokeId">{`ID / ${item.pokemon.order}`}</p>
-              <h2 className="pokeName">{item.pokemon.name}</h2>
-              {item.pokemon.types.map((item, index) =>
-                <h3 className="pokeType" key={index}>{item.type.name}</h3>
-              )}
-            </div>
-          </li>
-          )}
-        </ul>
+        <PokeInput handleChangeInput={this.handleChangeInput}/>
+        <PokeList pokeData={pokeData} value={value}/>
       </div>
     );
   }
