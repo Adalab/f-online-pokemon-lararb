@@ -10,7 +10,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pokeData: JSON.parse(localStorage.getItem('dataSaved')),
+      pokeData: [],
       value: ''
     }
 
@@ -23,7 +23,7 @@ class App extends React.Component {
   }
 
   getPokeFetch() {
-    fetch('http://pokeapi.salestock.net/api/v2/pokemon')
+    fetch('http://pokeapi.salestock.net/api/v2/pokemon?limit=25')
       .then(res => res.json())
       .then(data => data.results.map(item => 
         fetch(item.url)
@@ -31,7 +31,6 @@ class App extends React.Component {
           .then(data =>
             {this.setState(prevState => {
               const newData = [...prevState.pokeData, {pokemon: data}]
-              localStorage.setItem('dataSaved', JSON.stringify(newData))
               return {pokeData: newData}
             })
             }
@@ -52,8 +51,14 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <PokeInput handleChangeInput={this.handleChangeInput}/>
-        <PokeList pokeData={pokeData} value={value}/>
+        {pokeData === [] ? 
+        <React.Fragment>
+          <PokeInput handleChangeInput={this.handleChangeInput}/>
+          <PokeList pokeData={pokeData} value={value}/>
+        </React.Fragment>
+        :
+         <p className="loadingMessage">Pokemons are coming... despacico :)</p> 
+        }
       </div>
     );
   }

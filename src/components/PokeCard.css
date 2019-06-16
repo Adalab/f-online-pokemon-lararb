@@ -1,0 +1,46 @@
+.pokeCard__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.pokeInfo__container {
+    background-color: white;
+    margin: 0 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.pokeName {
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.pokeType__container {
+    display: flex;
+}
+
+.pokeType {
+    margin: 5px;
+    font-weight: 400;
+    font-size: 10px;
+    padding: 2px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.pokeId {
+    margin: 0;
+    max-width: 25px;
+    background-color: lightgray;
+    font-size: 7px;
+    padding: 3px;
+    align-self: flex-start;
+}
+
+.pokeImg {
+    max-width: 80px;
+}

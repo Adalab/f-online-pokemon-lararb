@@ -1,0 +1,15 @@
+.pokeList {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+    width: 70vw;
+    margin: 0 auto;
+    padding: 0;
+    text-transform: capitalize;
+}
+
+.pokeItem {
+    background-color: rgb(226, 226, 226);
+    box-shadow: 1px 1px 1px grey;
+}
