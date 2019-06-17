@@ -31,7 +31,7 @@ class App extends React.Component {
           .then (res => res.json())
           .then(data =>
             {this.setState(prevState => {
-              const newData = [...prevState.pokeData, {pokemon: data}]
+              const newData = [...prevState.pokeData, data]
               return {pokeData: newData}
             })
             }
@@ -64,7 +64,7 @@ class App extends React.Component {
         :
           <React.Fragment>
             <PokeInput handleChangeInput={this.handleChangeInput}/>
-            <PokeList pokeData={pokeData} value={value} compareId={this.compareId(pokeData.pokemon.id, pokeData.pokemon.id)}/>
+            <PokeList pokeData={pokeData} value={value} compareId={this.compareId}/>
           </React.Fragment>
         }
       </div>

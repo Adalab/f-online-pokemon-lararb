@@ -9,12 +9,12 @@ class PokeList extends React.Component {
         return (
             <ul className="pokeList">
                 {pokeData
-                    .filter(item => item.pokemon.name.includes(value))
+                    .filter(item => item.name.includes(value))
+                    .sort(compareId) 
                     .map((item, index) =>
-                        <li className="pokeItem" key={index}>
+                        <li className="pokeItem" key={index} id={item.id}>
                             <PokeCard item={item}/>
-                        </li>)
-                    .sort(compareId)    
+                        </li>) 
                 }
             </ul>
         );
