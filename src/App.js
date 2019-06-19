@@ -3,6 +3,8 @@ import './App.css';
 import PokeList from './components/PokeList';
 import PokeInput from './components/PokeInput';
 
+const ENDPOINT = 'http://pokeapi.salestock.net/api/v2/pokemon?limit=25';
+
 
 class App extends React.Component {
 
@@ -24,20 +26,35 @@ class App extends React.Component {
   }
 
   getPokeFetch() {
-    fetch('http://pokeapi.salestock.net/api/v2/pokemon?limit=25')
-      .then(res => res.json())
-      .then(data => data.results.map(item => 
-        fetch(item.url)
-          .then (res => res.json())
-          .then(data =>
-            {this.setState(prevState => {
-              const newData = [...prevState.pokeData, data]
-              return {pokeData: newData}
-            })
-            }
-          )
-      ))
+    const pokePromiseList = fetch(ENDPOINT).then(res => res.json())
+      .then(data => 
+        data.results.map(url =>
+          fetch(url.url).then(response => response.json())
+        )
+      )
+    const pokemonData = await Promise.all(pokePromiseList).then(item => console.log(item));
+    
+    this.setState({
+      pokeData: pokemonData
+    })
   }
+
+
+  // getPokeFetch() {
+  //   fetch('http://pokeapi.salestock.net/api/v2/pokemon?limit=25')
+  //     .then(res => res.json())
+  //     .then(data => data.results.map(item => 
+  //       fetch(item.url)
+  //         .then (res => res.json())
+  //         .then(data =>
+  //           {this.setState(prevState => {
+  //             const newData = [...prevState.pokeData, data]
+  //             return {pokeData: newData}
+  //           })
+  //           }
+  //         )
+  //     ))
+  // }
 
   handleChangeInput(event) {
     const currentValue = event.currentTarget.value;
