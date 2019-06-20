@@ -3,7 +3,6 @@ import './App.css';
 import PokeList from './components/PokeList';
 import PokeInput from './components/PokeInput';
 
-
 class App extends React.Component {
 
   constructor(props) {
@@ -14,8 +13,8 @@ class App extends React.Component {
       value: ''
     }
 
-   this.handleChangeInput = this.handleChangeInput.bind(this);
-   this.compareId = this.compareId.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
+    this.compareId = this.compareId.bind(this);
 
   }
 
@@ -30,13 +29,13 @@ class App extends React.Component {
         fetch(item.url)
           .then (res => res.json())
           .then(data =>
-            {this.setState(prevState => {
-              const newData = [...prevState.pokeData, data]
-              return {pokeData: newData}
-            })
-            }
+          {this.setState(prevState => {
+            const newData = [...prevState.pokeData, data]
+            return {pokeData: newData}
+          });
+          }
           )
-      ))
+      ));
   }
 
   handleChangeInput(event) {
@@ -61,7 +60,7 @@ class App extends React.Component {
       <div className="App">
         {pokeData.length === 0 ? 
           <p className="loadingMessage">Pokemons are coming... despacico :)</p>
-        :
+          :
           <React.Fragment>
             <PokeInput handleChangeInput={this.handleChangeInput}/>
             <PokeList pokeData={pokeData} value={value} compareId={this.compareId}/>

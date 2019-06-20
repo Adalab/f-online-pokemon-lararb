@@ -17,7 +17,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react/recommended"
     ],
     "rules": {
         "indent": [2, 2],
@@ -45,5 +45,6 @@ module.exports = {
         "no-restricted-properties": [1, {
           "property": "lenght",
           "message": "Use length instead of lenght (notice the position of the h)"
+        }]
     }
 };
