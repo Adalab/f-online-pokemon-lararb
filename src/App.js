@@ -54,19 +54,26 @@ class App extends React.Component {
           {this.setState(prevState => {
             const newData = [...prevState.pokeData, data]
             return {pokeData: newData}
-          });
-          }
-          )
+          })
+          this.getPokeEvolFetch()
+        })
       ));
   }
 
   getPokeEvolFetch() {
     
-    console.log(this.state.pokeData);
-
-    // fetch(`https://pokeapi.co/api/v2/evolution-chain/${pokeId}/`)
-    //   .then(res => res.json())
-    //   .then(data => console.log(data))
+    const pokeDataId = this.state.pokeData.map(item => item.id);
+    
+    pokeDataId.map(item2 => fetch(`https://pokeapi.co/api/v2/evolution-chain/${item2}/`)
+    .then(res => res.json())
+    .then(data => data.chain.evolves_to.map(item => { 
+      const evolutionName = item.species.name;
+      const dataEvol = this.state.pokeData.map(item => {
+        return {...item, evolution: evolutionName}
+      })
+      this.setState({pokeData: dataEvol})
+    }))
+    );
   }
 
   handleChangeInput(event) {
@@ -85,7 +92,7 @@ class App extends React.Component {
 
   render() {
     const {pokeData, value} = this.state;
-
+    console.log(pokeData);
 
     return (
       <div className="App">
@@ -99,7 +106,8 @@ class App extends React.Component {
               <PokeList pokeData={pokeData} value={value} compareId={this.compareId}/>
             </React.Fragment>
           }/>
-          <Route path="/detail" render= {() => <PokeCard pokeData={pokeData}/>} />
+          <Route path="/detail/:id" render= {routerProps =>
+            <PokeCard pokeData={pokeData} idparam={routerProps} />} />
         </Switch>
         }
       </div>

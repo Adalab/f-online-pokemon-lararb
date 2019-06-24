@@ -13,12 +13,13 @@ class PokeList extends React.Component {
                     .sort(compareId) 
                     .map((item, index) =>
                         <li className="pokeItem" key={index} id={item.id}>
-                            <Link to="/detail">
+                            <Link to={`/detail/${item.id}`}>
                             <div className="pokeCard__container">
                                 <img src={item.sprites.front_default} alt={item.name} className="pokeImg"/>
                                 <p className="pokeId">{`ID / ${item.id}`}</p>
                                 <div className="pokeInfo__container">
                                 <h2 className="pokeName">{item.name}</h2>
+                                <h3>{item.evolution}</h3>
                                 <div className="pokeType__container">
                                     {item.types.map((item, index) =>
                                     <h3 className="pokeType" key={index}>{item.type.name}</h3>

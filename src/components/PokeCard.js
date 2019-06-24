@@ -4,6 +4,10 @@ import './PokeCard.css';
 class PokeCard extends React.Component {
     render() {
         const {pokeData} = this.props;
+
+        const matchId = this.props.idparam.match.params.id;
+        const pokemon = pokeData[matchId];
+
         return (
           <React.Fragment>
             {pokeData.map( item =>
@@ -22,10 +26,10 @@ class PokeCard extends React.Component {
                 <p className="pokeHeight">{`Height: ${item.height}`}</p>
                 <ul className="pokeAbilitiesList">
                   {`Abilities:
-                    ${item.abilities.map(item =>
-                      <li className="pokeAbility">
+                    ${item.abilities.map((item, index) =>
+                      <li className="pokeAbility" key={index}>
                         {item.ability.name}
-                      </li>
+                      </li> 
                     )}`}
                 </ul>
 
