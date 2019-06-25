@@ -6,35 +6,39 @@ class PokeCard extends React.Component {
         const {pokeData} = this.props;
 
         const matchId = this.props.idparam.match.params.id;
-        const pokemon = pokeData[matchId];
+        const pokemon = pokeData[parseInt (matchId, 10)];
+
+        console.log(this.props.idparam);
+        console.log(pokemon);
 
         return (
           <React.Fragment>
-            {pokeData.map( item =>
+            {pokemon ?
               <div className="pokeCard__container">
-                <img src={item.sprites.front_default} alt={item.name} className="pokeImg"/>
-                <p className="pokeId">{`ID / ${item.id}`}</p>
+                <img src={pokemon.sprites.front_default} alt={pokemon.name} className="pokeImg"/>
+                <p className="pokeId">{`ID / ${pokemon.id}`}</p>
                 <div className="pokeInfo__container">
-                  <h2 className="pokeName">{item.name}</h2>
+                  <h2 className="pokeName">{pokemon.name}</h2>
                   <div className="pokeType__container">
-                    {item.types.map((item, index) =>
+                    {pokemon.types.map((item, index) =>
                       <h3 className="pokeType" key={index}>{item.type.name}</h3>
                     )}
                   </div>
                 </div>
-                <p className="pokeWeight">{`Weight: ${item.weight}`}</p>
-                <p className="pokeHeight">{`Height: ${item.height}`}</p>
+                <p className="pokeWeight">{`Weight: ${pokemon.weight}`}</p>
+                <p className="pokeHeight">{`Height: ${pokemon.height}`}</p>
                 <ul className="pokeAbilitiesList">
                   {`Abilities:
-                    ${item.abilities.map((item, index) =>
+                    ${pokemon.abilities.map((item, index) =>
                       <li className="pokeAbility" key={index}>
                         {item.ability.name}
                       </li> 
                     )}`}
                 </ul>
-
               </div>
-          )}
+              :
+              null
+          }
           </React.Fragment>
         );
     }

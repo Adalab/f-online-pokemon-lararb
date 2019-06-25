@@ -5,7 +5,7 @@ import PokeInput from './components/PokeInput';
 import {Switch, Route} from 'react-router-dom';
 import PokeCard from './components/PokeCard';
 
-//const ENDPOINT = 'http://pokeapi.salestock.net/api/v2/pokemon?limit=25';
+const ENDPOINT = 'http://pokeapi.salestock.net/api/v2/pokemon?limit=5';
 
 class App extends React.Component {
 
@@ -29,36 +29,41 @@ class App extends React.Component {
     
   }
 
-  // async getPokeFetch() {
-  //   const pokePromiseList = fetch(ENDPOINT).then(res => res.json())
-  //     .then(data => 
-  //       data.results.map(url =>
-  //         fetch(url.url).then(response => response.json())
-  //       )
-  //     )
-  //   const pokemonData = await Promise.all(pokePromiseList);
+  async getPokeFetch() {
+    const firstCallPromise = fetch(ENDPOINT).then(res => res.json());
+
+    const data = await firstCallPromise;
+    console.log(data);
+
+    const pokePromiseList = data.results.map(data => fetch(data.url).then(res => res.json()));
+    console.log(pokePromiseList);
     
-  //   this.setState({
-  //     pokeData: pokemonData
-  //   })
-  // }
+    const pokemonData = await Promise.all(pokePromiseList);
+    console.log(pokemonData);
+    
+    this.setState({
+      pokeData: pokemonData
+    })
 
-
-  getPokeFetch() {
-    fetch('http://pokeapi.salestock.net/api/v2/pokemon?limit=25')
-      .then(res => res.json())
-      .then(data => data.results.map(item => 
-        fetch(item.url)
-          .then (res => res.json())
-          .then(data =>
-          {this.setState(prevState => {
-            const newData = [...prevState.pokeData, data]
-            return {pokeData: newData}
-          })
-          this.getPokeEvolFetch()
-        })
-      ));
+    this.getPokeEvolFetch()
   }
+
+
+  // getPokeFetch() {
+  //   fetch('http://pokeapi.salestock.net/api/v2/pokemon?limit=25')
+  //     .then(res => res.json())
+  //     .then(data => data.results.map(item => 
+  //       fetch(item.url)
+  //         .then (res => res.json())
+  //         .then(data =>
+  //         {this.setState(prevState => {
+  //           const newData = [...prevState.pokeData, data]
+  //           return {pokeData: newData}
+  //         })
+  //         this.getPokeEvolFetch()
+  //       })
+  //     ));
+  // }
 
   getPokeEvolFetch() {
     
@@ -67,10 +72,14 @@ class App extends React.Component {
     pokeDataId.map(item2 => fetch(`https://pokeapi.co/api/v2/evolution-chain/${item2}/`)
     .then(res => res.json())
     .then(data => data.chain.evolves_to.map(item => { 
+
       const evolutionName = item.species.name;
+
       const dataEvol = this.state.pokeData.map(item => {
+
         return {...item, evolution: evolutionName}
       })
+
       this.setState({pokeData: dataEvol})
     }))
     );
@@ -92,7 +101,6 @@ class App extends React.Component {
 
   render() {
     const {pokeData, value} = this.state;
-    console.log(pokeData);
 
     return (
       <div className="App">
